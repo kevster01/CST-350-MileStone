@@ -1,0 +1,9 @@
+﻿@model CST350_Milestone1.Models.Cell;
+
+@{
+    string[] imagename = { "oringinal.png", "flagged.png" };
+}
+
+<button class="btn" type="submit" name="ButtonNumber" value="@Model.Row+@Model.Column" asp-controller="GameBoard" asp-action="ButtonClick">
+    <img class="cell" src="~/img/@imagename[Model.Flagged ? 1 : 0]" />
+</button>

@@ -1,0 +1,56 @@
+﻿
+@model CST350_Milestone1.Models.Board;
+
+@{
+    string[] imagename = { "oringinal.png", "clicked.png", "minehit.png", "flagged.png" };
+}
+<body>
+    <div class="container-fluid text-center">
+        <div class="row g-0 text-center">
+            <div class="col-2 col-md-3 col-lg-4">
+                <h5>Flags</h5>
+                <h2>10</h2>
+            </div>
+            <div class="col-7 col-md-6 col-lg-6">
+                <h1 class="display-3">00:00:00</h1>
+            </div>
+            <div class="col-3 col-md-3 col-lg-2 text-end">
+                <div class="btn-group-vertical" role="group"><button class="btn btn-info" type="button"><h5><i class="far fa-save"></i> Save</h5></button><button class="btn btn-danger" type="button"><h5><i class="fas fa-sign-out-alt"></i> Quit </h5></button></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="grid justify-content-center">
+                @{
+                    for (int row = 0; row < Model.Grid.GetLength(0); row++)
+                    {
+                        for (int col = 0; col < Model.Grid.GetLength(1); col++)
+                        {
+                         
+                           
+                           Cell c = Model.Grid[row, col];
+                           
+                           bool showBomb = c.Visited && c.Live;
+                           
+                           bool flag = c.Flagged;
+                           
+                           int imageIdx = 0;
+                           
+                           if (!c.Flagged && !c.Live)
+                            {
+                                imageIdx = c.Visited ? 1 : 0;
+                            }
+                            if (c.Live && !c.Flagged)
+                            {
+                                imageIdx = c.Visited ? 2 : 0;
+                            }
+                            <div id="@row+@col">
+                                <button class="btn" type="submit" name="ButtonNumber" value="@row+@col" asp-controller="GameBoard" asp-action="ButtonClick">
+                                    <img class="cell" src="~/img/@imagename[imageIdx]" />
+                                </button>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+</body>
