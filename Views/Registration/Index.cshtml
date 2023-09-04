@@ -1,0 +1,82 @@
+﻿@using MinesweeperApp.Models;
+@model MinesweeperApp.Models.User
+
+<h4>Register New User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ProcessRegistration">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label" style="color: #fff">First Name</label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label" style="color: #fff">Last Name</label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sex" class="control-label" style="color: #fff"></label>
+                @Html.DropDownListFor(m => m.Sex, new SelectList(Enum.GetValues(typeof(Gender)), "Select your gender"))
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label" style="color: #fff"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label" style="color: #fff"></label>
+                @Html.DropDownListFor(m => m.State, new SelectList(Enum.GetValues(typeof(States)), "Select your state"))
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label" style="color: #fff"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label" style="color: #fff"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label" style="color: #fff"></label>
+                <input asp-for="Password" type="password" class="form-control" id="Password" onkeyup="verify()"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Password2" class="control-label" style="color: #fff">Re-Enter Password</label>
+                <input id="Password2" type="password" class="form-control" onkeyup="verify()"/>
+                <span id="Password2Errors"></span>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" id="register" value="Register" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function verify() {
+        if (document.getElementById("Password").value == document.getElementById("Password2").value) {
+            document.getElementById('Password2Errors').innerHTML = 'matching';
+            document.getElementById('register').disabled = false;
+            document.getElementById('Password2Errors').style.color = 'gold';
+
+        } else {
+            document.getElementById('Password2Errors').style.color = 'red';
+            document.getElementById('Password2Errors').innerHTML = 'not matching';
+            document.getElementById('register').disabled = true;
+        }
+    }
+</script>
+
+<div>
+    <a asp-action="Index">Back to Top</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
